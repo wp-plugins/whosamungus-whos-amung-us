@@ -1,7 +1,7 @@
-=== Who’s Among Us - whos.amung.us ===
+=== Whos Among Us - whos.amung.us ===
 Contributors: megafu
 Donate link: http://www.miguelpinho.com/wordpress-plugins/donate/
-Tags: stat, stats, statistics, who is online, who's online, users online, real time stats, real time statistics, whos.amung.us, who's amung us, who, amung, us, user count, widget, statistiques, estatisticas
+Tags: stat, stats, statistics, who is online, whos online, who is online, users online, real time stats, real time statistics, whos.amung.us, whos amung us, who, amung, us, user count, widget, statistiques, estatisticas
 Requires at least: 2.0.2
 Tested up to: 3.3.1
 Stable tag: trunk
