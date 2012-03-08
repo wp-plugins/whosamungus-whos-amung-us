@@ -6,7 +6,7 @@ Requires at least: 2.0.2
 Tested up to: 3.3.1
 Stable tag: trunk
 
-This is a plugin that will allow you to manage your whos.amung.us stats very easily. 
+This plugin will allow you to manage your whos.amung.us stats very easily. 
 
 == Description ==
 
@@ -36,7 +36,7 @@ No - This was done by a user that wanted to be able to manage it easily.
 
 == Screenshots ==
 
-1. This is the widget where you can setup the details of your account
+1. This is the widget where you can setup the details of your account.
 
 == Changelog ==
 
