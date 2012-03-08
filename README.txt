@@ -1,8 +1,6 @@
 === Who’s Among Us - whos.amung.us ===
 Contributors: megafu
 Donate link: http://www.miguelpinho.com/wordpress-plugins/donate/
-Author: Miguel Pinho
-Author URI: http://www.miguelpinho.com
 Tags: stat, stats, statistics, who is online, who's online, users online, real time stats, real time statistics, whos.amung.us, who's amung us, who, amung, us, user count, widget, statistiques, estatisticas
 Requires at least: 2.0.2
 Tested up to: 3.3.1
@@ -38,11 +36,12 @@ No - This was done by a user that wanted to be able to manage it easily.
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the directory of the stable readme.txt, so in this case, `/tags/4.3/screenshot-1.png` (or jpg, jpeg, gif)
-2. This is the second screen shot
+1. This is the widget where you can setup the details of your account
 
 == Changelog ==
+
+= 0.1.1 =
+Added a preview Screenshot
 
 = 0.1 =
 This is the first version realeased
