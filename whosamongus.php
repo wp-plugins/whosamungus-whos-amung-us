@@ -16,7 +16,7 @@ Plugin Name: Who's Among Us
 Plugin URI: http://www.miguelpinho.com/wordpress-plugins/whos-amung-us-wordpress-plugin/
 Description: This is a widget that displays the very famous who's among us counter and helps you to manage it. To get your code visit them at <a href="http://whos.amung.us" TARGET="_blank">http://whos.amung.us</a>. This not an official plugin but it works.
 Author: Miguel Pinho	
-Version: 0.1
+Version: 0.2
 Author URI: http://miguelpinho.com/
 */
 
@@ -89,10 +89,27 @@ function widget_whosamongus_control()
 		</label>
 		<br/>
 
-		<?php _e('Code:', 'widgets'); ?><input style="width:150px;" type="text" id="whosamongus-code" name="whosamongus-code" value="<?php echo ($options['code'] ? wp_specialchars($options['code'], true) : '115'); ?>" /></label>
+		<?php _e('Code:', 'widgets'); ?><input style="width:150px;" type="text" id="whosamongus-code" name="whosamongus-code" value="<?php echo ($options['code'] ? wp_specialchars($options['code'], true) : ''); ?>" /></label>
 		<br/>
 		<small>To get your code visit them at <a href="http://whos.amung.us" TARGET="_blank">http://whos.amung.us</a> copy the code in the yellow box and paste it here.</small>
 		<br/><br/>
+		
+		<?php
+			$code = $options['code'];
+			$unique_id = substr($code, 42, 12);// Get Unique ID
+			
+			if($unique_id != "")
+			{
+				?>
+					<?php _e('Unique ID:', 'widgets'); ?><input style="width:150px;" type="text" id="whosamongus-unique-id" name="whosamongus-unique-id" value="<?php echo ($unique_id); ?>" readonly="readonly"/></label>
+					<small>Keep a copy this Unique ID <strong>somewhere (else)</strong>!</small>
+					<br/><br/>
+				<?
+			}
+		?>
+		
+
+		
 		
 		<label for="whosamongus-standard-position" style="line-height:25px;display:block;">
 			<?php _e('Standard Widget (Status & Position):', 'widgets'); ?>
@@ -160,4 +177,220 @@ function widget_whosamongus_init() {
 
 // Delay plugin execution to ensure Dynamic Sidebar has a chance to load first
 add_action('widgets_init', 'widget_whosamongus_init');
+
+
+
+
+
+/* ADMIN MENU */
+add_action('admin_menu', 'mt_add_pages');
+
+// action function for above hook
+function mt_add_pages() 
+{
+    // Add a new top-level menu (ill-advised):
+    add_menu_page(__('Test Toplevel','menu-test'), __('Whos Amung Us','menu-test'), 'manage_options', 'whos-amung-us', 'my_plugin_options' );
+
+    // Add a submenu to the custom top-level menu:
+    //add_submenu_page('mt-top-level-handle', __('Test Sublevel','menu-test'), __('Wiget','menu-test'), 'manage_options', 'sub-page', 'mt_sublevel_page');
+}
+
+
+function my_plugin_options()
+{
+	if (!current_user_can('manage_options'))  
+	{
+		wp_die( __('You do not have sufficient permissions to access this page.') );
+	}
+	
+	
+	
+	
+	global $wpdb;
+	$options = (array) get_option('widget_whosamongus');
+	$code = $options['code'];
+	$unique_id = substr($code, 42, 12);// Get Unique ID
+
+
+	?>
+	
+	
+	<h2>
+		<a target='_blank' href=''>Who's Amung Us - WP Plugin</a>
+		<span style='font-size: 12px'>Version:0.2</span>
+	</h2>
+	
+
+	
+	
+	<!-- START :: Donate  -->
+	<div style="width:905px; ">
+		<div style="float:left;background-color:white;padding: 10px 10px 10px 10px;margin-right:15px;border: 1px solid #ddd;height:150px; background-color:#CEF6CE">
+			<div style="width:423px;height:130px;">
+				<h3>About this Plugin</h3>
+				<em>This plugin will allow you to manage your whos.amung.us stats very easily. Don't forget to setup the widget!</em>
+				
+				<em>This plugin was developed by <a href="http://www.miguelpinho.com" target="_blank"><strong>Miguel Pinho</strong></a>.</em><br/><br/>
+				
+				Twitter: <a href="https://twitter.com/megafu" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow @megafu</a>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+				<br/>
+				
+				Linkedin:
+				<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
+				<script type="IN/MemberProfile" data-id="http://www.linkedin.com/in/miguelpinho" data-format="click" data-text="Miguel Pinho" data-related="false"></script>
+			</div>
+		</div>
+
+		<div style="float:left;background-color:white;padding:10px;border:1px solid #ddd;height:150px; background-color:#F5F6CE">
+			<div style="width:423px;height:130px;">
+				<h3><img src="http://assets.amung.us/images/pro/hooks/map.png" class="imgvam" /> Do you like these? Go PRO!</h3>
+				<em>With a whos.amung.us Pro account, you are in control. Everything is customizable. Insert your own logo, re-arrange dashboard stats anyway you like, choose colors for each stat. The possibilities are endless!</em><br/><br/>
+				<a href="http://whos.amung.us/pro/">Get more stats!</a><br/>
+		    	<a href="http://whos.amung.us/pro/">Upgrade your map!</a>
+			</div>
+		</div>
+
+	<div style="clear:both;">
+		
+	<br/>		
+
+	<!-- END :: Donate  -->
+	
+	
+	
+
+	<div id="poststuff" class="metabox-holder has-right-sidebar" style="margin-top:10px">
+		<div id="side-info-column" class="inner-sidebar">
+	    	<div id="side-sortables" class="meta-box-sortables">
+
+				<!-- SOON
+				<div id="more_plugins" class="postbox">
+					<div class="handlediv"><br /></div>
+					<h3 class='hndle'><span>More Great WP Plugins</span></h3>
+					<div class="inside">
+						<ul>
+							<li><a class="rsswidget" href="">Easy to Install Whos.Among.Us Stats</a><br/>Delivers Real-time stats about your visitors</li>
+						</ul>
+					</div>
+				</div>
+				-->
+				
+				<?php
+				if($unique_id != "")
+				{
+					?>
+						<div id="more_stats" class="postbox">
+							<div class="handlediv"><br /></div>
+							<h3 class='hndle'><span>Your Unique ID</span></h3>
+							<div class="inside">
+								<?php _e('Unique ID:', 'widgets'); ?><input style="width:150px;" type="text" id="whosamongus-unique-id" name="whosamongus-unique-id" value="<?php echo ($unique_id); ?>" readonly="readonly"/></label>
+								<br/>
+								<small>Keep a copy this Unique ID <strong>somewhere (else)</strong>!</small>
+							</div>
+						</div>				
+						<div id="more_stats" class="postbox">
+							<div class="handlediv"><br /></div>
+							<h3 class='hndle'><span>More Whos.Amung.Us Stats</span></h3>
+							<div class="inside">
+								<ul>
+									<li><a class="rsswidget" target="_blank" href="http://whos.amung.us/stats/<?php echo($unique_id); ?>/">View Official Website</a><br/>View the more of your stats online</li>
+									<li><a class="rsswidget" target="_blank" href="http://whos.amung.us/stats/readers/<?php echo($unique_id); ?>/">Users Pages</a><br/>A list of the most popular pages, with the number of people on each page.</li>
+								</ul>
+							</div>
+						</div>
+					<?php
+				}
+				?>
+			</div>
+		</div>
+
+		<?php
+			if(isset($_GET['period']))
+			{
+				if($_GET['period'] == 'daily' OR $_GET['period'] == 'monthly' OR $_GET['period'] == 'yearly')
+				{
+					$period = $_GET['period'];
+				}
+				else $period = "daily";
+			}
+			else $period = "daily";
+		
+	
+			if($unique_id != "")
+			{
+				?>
+
+				<div id="post-body">
+				    <div id="post-body-content" class="has-sidebar-content">
+						<h3>Timeline Stats</h3><br/>
+						<div class="tar mediumfont bold" style="margin-top:-20px">
+					    	<img src="http://assets.amung.us/images/pro/hooks/pie.png" class="imgvam" />
+					    	Change Period:
+							<a href="admin.php?page=whos-amung-us&period=daily">Daily </a> | 
+							<a href="admin.php?page=whos-amung-us&period=monthly">Monthly </a> | 
+							<a href="admin.php?page=whos-amung-us&period=yearly">Yearly </a>
+					    </div>
+					
+					    <div>
+					        <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" 
+					            codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" 
+					            width="900" height="130" id="timeline" align="middle">
+					            <param name="allowScriptAccess" value="always" />
+								<param name="allowNetworking" value="all" />
+					            <param name="allowFullScreen" value="false" />
+					            <param name="movie" value="http://whos.amung.us/flash/timeline.swf?data=http://whos.amung.us/stats/graph_data/<?php echo($unique_id);?>/<?php echo($period);?>/timeline/" />
+					            <param name="quality" value="high" />
+					            <param name="bgcolor" value="#ffffff" />   
+					            <param name="wmode" value="transparent" /> 
+					            <embed src="http://whos.amung.us/flash/timeline.swf?data=http://whos.amung.us/stats/graph_data/<?php echo($unique_id);?>/<?php echo($period);?>/timeline/" 
+					            quality="high" bgcolor="#ffffff" width="600" height="130" 
+					            name="timeline" align="middle" allowScriptAccess="always" allowNetworking="all" allowFullScreen="false" wmode="transparent"
+					            type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
+					        </object>
+					    </div>
+					</div>
+		
+					<!-- MAP -->
+					<h3>Live Map</h3>
+					<div id="maps_data">
+				        <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" 
+				            codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" 
+				            width="468" height="234" id="dashmap" align="middle">
+				            <param name="allowScriptAccess" value="always" />
+							<param name="allowNetworking" value="all" />
+				            <param name="allowFullScreen" value="false" />
+				            <param name="movie" value="http://whos.amung.us/flash/dashmap.swf" />
+				            <param name="quality" value="high" />
+				            <param name="bgcolor" value="#ffffff" />
+				            <param name="flashvars" value="wausitehash=<?php echo($unique_id);?>&amp;pin=star-red-dashmap&amp;link=yes&amp;map=dashmap.png" />  
+				            <embed src="http://whos.amung.us/flash/dashmap.swf" quality="high" bgcolor="#ffffff" 
+				            flashvars="wausitehash=<?php echo($unique_id);?>&amp;pin=star-red-dashmap&amp;link=yes&amp;map=dashmap.png"
+				 			width="600" height="300" name="dashmap" align="middle" allowScriptAccess="always" allowFullScreen="false" 
+				            allowNetworking="all" type="application/x-shockwave-flash" 
+							pluginspage="http://www.macromedia.com/go/getflashplayer" />
+				        </object>
+				    </div>
+				</div>
+
+				<?php
+			}
+			else
+			{
+				?>
+					<div id="post-body">
+					    <div id="post-body-content" class="has-sidebar-content">
+						First you must setup the "widget"!
+						</div>
+					</div>
+				<?
+			}
+		?>
+		</div>
+		</div>
+		</div>
+		<?php
+}
+
+
 ?>
